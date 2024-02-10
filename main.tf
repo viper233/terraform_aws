@@ -48,7 +48,7 @@ module "vpc" {
 
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "19.15.3"
+  version = "20.2.1"
 
   cluster_name    = local.cluster_name
   cluster_version = "1.27"
@@ -83,6 +83,8 @@ module "eks" {
       desired_size = 1
     }
   }
+
+  enable_cluster_creator_admin_permissions = true
 }
 
 

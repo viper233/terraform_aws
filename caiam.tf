@@ -34,12 +34,14 @@ data "aws_iam_policy_document" "assume_role_with_oidc" {
 
     principals {
       type        = "Federated"
-      identifiers = ["arn:aws:iam::518340611346:oidc-provider/oidc.eks.us-west-2.amazonaws.com/id/4AF960C7631C936307A5AC80FB2D81E1"]
+#       identifiers = ["arn:aws:iam::518340611346:oidc-provider/oidc.eks.us-west-2.amazonaws.com/id/4AF960C7631C936307A5AC80FB2D81E1"]
+      identifiers = [module.eks.oidc_provider_arn]
     }
 
     condition {
       test     = "StringEquals"
-      variable = "oidc.eks.us-west-2.amazonaws.com/id/4AF960C7631C936307A5AC80FB2D81E1:sub"
+      # variable = "oidc.eks.us-west-2.amazonaws.com/id/4AF960C7631C936307A5AC80FB2D81E1:sub"
+      variable = "${module.eks.oidc_provider}:sub"
       values   = ["system:serviceaccount:kube-system:cluster-autoscaler"]
     }
   }
